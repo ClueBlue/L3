@@ -1,20 +1,39 @@
+import { Text, View, TextInput, Button, ScrollView, Alert, TouchableOpacity, ToastAndroid } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import React, {useState} from 'react';
 
-export default function App() {
+const App = () => {
+const [un, setUn] = useState('');
+const [pw, setPw] = useState('Admin');
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  <View>
+  <Text>User Type:</Text>
+  <Picker onValueChange={(value) => console.log(value)}>
+        <Picker.Item label='Admin' value='admin'/>
+         <Picker.Item label='Guest' value='guest'/>
+        </Picker>
+  <Text>User Name:</Text>
+      <TextInput style={{borderWidth: 1}} onChangeText={(text) => setUn(text)}/>
+  <Text>Password:</Text>
+    <TextInput style={{borderWidth: 1}} onChangeText={(text) => setPw(text)}/>
+  <StatusBar translucent={false} />
+<TouchableOpacity onPress={() => {
+  const correctpw = '123'
+  let mymessage = "Error! Wrong Password!"
+  if(pw == correctpw) {
+    mymessage = "Welcome "+un+" "+pw;
+  }
+  ToastAndroid.show(mymessage, ToastAndroid.SHORT)}
+  }>
+  <Text>LOG IN</Text>
+</TouchableOpacity>
+<Text>Test {un} {pw}</Text>
+</View>
+);
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
+
+
